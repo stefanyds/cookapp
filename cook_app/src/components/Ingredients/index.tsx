@@ -1,4 +1,4 @@
-import { ScrollView } from "react-native";
+import { ScrollView, Alert } from "react-native";
 import { styles } from "./styles";
 import Ingredient from "../Ingredient";
 import { Fragment, useState } from "react";
@@ -17,7 +17,10 @@ export default function Ingredients(){
     }
 
     function handleClearSelected() {
-        setSelected([])
+        Alert.alert("Limpar", "Deseja limpar tudo?", [
+            { text: "Não", style: "cancel" },
+            { text: "Sim", onPress: () => setSelected([]) },
+        ])
     }
 
     return (
@@ -38,13 +41,14 @@ export default function Ingredients(){
                     ))
                 }
             </ScrollView>
-    
-            <Selected 
+
+            {selected.length > 0 && (
+                <Selected 
                 quantity={selected.length} 
                 onClear={handleClearSelected}
-            />
+                />
+            )}
+    
         </Fragment>
-        
-
     )
 }
