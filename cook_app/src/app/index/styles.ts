@@ -23,5 +23,11 @@ export const styles = StyleSheet.create({
         marginTop: 12,
         marginBottom: 38,
         color: theme.colors.gray_400
+    },
+    ingredient: {
+        flexWrap: "wrap",
+        flexDirection: "row",
+        paddingBottom: 200,
+        gap: 12
     }
 })

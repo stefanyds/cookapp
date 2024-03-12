@@ -1,54 +1,29 @@
-import { ScrollView, Alert } from "react-native";
-import { styles } from "./styles";
-import Ingredient from "../Ingredient";
-import { Fragment, useState } from "react";
-import { Selected } from "../Selected";
+import { ScrollView } from "react-native"
 
-export default function Ingredients(){
-    const [selected, setSelected] = useState<string[]>([])
+import { services } from "@/services"
 
-    function handleToggleSelected(value: string) {
-        if(selected.includes(value)) {
-            return setSelected((state) => state.filter((item) => item !== value))
-        }
+import { styles } from "./styles"
+import { Ingredient, IngredientsProps } from "@/components/Ingredient"
 
-        setSelected((state) => [...state, value])
-        console.log(selected)
-    }
+type Props = {
+  ingredients: IngredientsProps[]
+}
 
-    function handleClearSelected() {
-        Alert.alert("Limpar", "Deseja limpar tudo?", [
-            { text: "Não", style: "cancel" },
-            { text: "Sim", onPress: () => setSelected([]) },
-        ])
-    }
-
-    return (
-        <Fragment>
-            <ScrollView 
-            contentContainerStyle={styles.container}
-            showsVerticalScrollIndicator={false}
-            >
-                {
-                    Array.from({ length: 10}).map((item, index) => (
-                        <Ingredient 
-                            key={index} 
-                            name="Maçã" 
-                            image="" 
-                            selected={selected.includes(String(index))}
-                            onPress={() => handleToggleSelected(String(index))}
-                        />
-                    ))
-                }
-            </ScrollView>
-
-            {selected.length > 0 && (
-                <Selected 
-                quantity={selected.length} 
-                onClear={handleClearSelected}
-                />
-            )}
-    
-        </Fragment>
-    )
+export function Ingredients({ ingredients }: Props) {
+  return (
+    <ScrollView
+      horizontal
+      style={styles.container}
+      contentContainerStyle={styles.ingredientsContent}
+      showsHorizontalScrollIndicator={false}
+    >
+      {ingredients.map((ingredient) => (
+        <Ingredient
+          key={ingredient.name}
+          name={ingredient.name}
+          image={`${services.storage.imagePath}/${ingredient.image}`}
+        />
+      ))}
+    </ScrollView>
+  )
 }

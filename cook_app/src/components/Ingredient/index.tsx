@@ -7,7 +7,7 @@ export type IngredientsProps = {
     selected?: boolean
 }
 
-export default function Ingredient({ 
+export function Ingredient({ 
     name, 
     image, 
     selected = false, 
