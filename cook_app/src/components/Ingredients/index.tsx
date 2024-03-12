@@ -1,7 +1,8 @@
 import { ScrollView } from "react-native";
 import { styles } from "./styles";
 import Ingredient from "../Ingredient";
-import { useState } from "react";
+import { Fragment, useState } from "react";
+import { Selected } from "../Selected";
 
 export default function Ingredients(){
     const [selected, setSelected] = useState<string[]>([])
@@ -15,22 +16,35 @@ export default function Ingredients(){
         console.log(selected)
     }
 
+    function handleClearSelected() {
+        setSelected([])
+    }
+
     return (
-        <ScrollView 
-        contentContainerStyle={styles.container}
-        showsVerticalScrollIndicator={false}
-        >
-            {
-                Array.from({ length: 100}).map((item, index) => (
-                    <Ingredient 
-                        key={index} 
-                        name="Maçã" 
-                        image="" 
-                        selected={selected.includes(String(index))}
-                        onPress={() => handleToggleSelected(String(index))}
-                    />
-                ))
-            }
-        </ScrollView>
+        <Fragment>
+            <ScrollView 
+            contentContainerStyle={styles.container}
+            showsVerticalScrollIndicator={false}
+            >
+                {
+                    Array.from({ length: 10}).map((item, index) => (
+                        <Ingredient 
+                            key={index} 
+                            name="Maçã" 
+                            image="" 
+                            selected={selected.includes(String(index))}
+                            onPress={() => handleToggleSelected(String(index))}
+                        />
+                    ))
+                }
+            </ScrollView>
+    
+            <Selected 
+                quantity={selected.length} 
+                onClear={handleClearSelected}
+            />
+        </Fragment>
+        
+
     )
 }
