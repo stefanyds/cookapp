@@ -18,8 +18,9 @@ export function Ingredient({
             style={[styles.container, selected && styles.selected]} 
             {...rest}
         >
-            <Image source={require("@/assets/apple.png")} style={styles.image} />
-            <Text style={styles.title}>Maçã</Text>
+            <Image source={{ uri: image }} style={styles.image} />
+            
+            <Text style={styles.title}>{name}</Text>
         </Pressable>
     )
 }
